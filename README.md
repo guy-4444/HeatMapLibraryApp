@@ -16,5 +16,5 @@ Step 2. Add the dependency:
 
 ```
 dependencies {
-  implementation 'com.github.guy-4444:HeatMapLibraryApp:Tag'
+	implementation 'com.github.guy-4444:HeatMapLibraryApp:1.00.01'
 }
