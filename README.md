@@ -18,7 +18,25 @@ Step 2. Add the dependency:
 dependencies {
 	    implementation 'com.github.guy-4444:HeatMapLibraryApp:1.00.02'
 }
+```
+## Usage
 
+###### StepProgress Constructor:
+```java
+
+    private double[][] dataMatrix;
+    HeatMap.generateBitmap(dataMatrix, new HeatMap.CallBack_HeatMap() {
+        @Override
+        public void bitmapReady(Bitmap bitmap) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    imageView.setImageBitmap(bitmap);
+                }
+            });
+        }
+    });
+```
 
 ## What's new
 1.00.02:
