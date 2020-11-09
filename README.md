@@ -16,5 +16,10 @@ Step 2. Add the dependency:
 
 ```
 dependencies {
-	implementation 'com.github.guy-4444:HeatMapLibraryApp:1.00.01'
+	    implementation 'com.github.guy-4444:HeatMapLibraryApp:1.00.02'
 }
+
+
+## What's new
+1.00.02:
+1. AsyncTask to TaskRunner
