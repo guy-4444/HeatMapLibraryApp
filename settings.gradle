@@ -1,0 +1,3 @@
+include ':heatMapLibrary'
+include ':app'
+rootProject.name = "HeatMapLibraryApp"
