@@ -16,6 +16,25 @@ import java.util.concurrent.Executors;
 
 public class HeatMap {
 
+    public interface CallBack_HeatMap {
+        void bitmapReady(Bitmap bitmap);
+    }
+
+    /**
+     * this function prepare heat map bitmap.
+     *
+     * @param matrix           double matrix, must be max 1.0 value
+     * @param callBack_heatMap to return after long task.
+     */
+    public static void generateBitmap(double[][] matrix, CallBack_HeatMap callBack_heatMap) {
+
+        LongRunningTask longRunningTask = new LongRunningTask(matrix);
+        new TaskRunner().executeAsync(longRunningTask, result -> {
+            if (callBack_heatMap != null) {
+                callBack_heatMap.bitmapReady(result);
+            }
+        });
+    }
 
     private static double[][] normalizeMatrix(double[][] matrix) {
         double RT = 10.0; // Ratio
@@ -59,16 +78,6 @@ public class HeatMap {
         return norMatrix;
     }
 
-
-    /**
-     * this function prepare heat map bitmap.
-     * @param matrix double matrix, must be max 1.0 value
-     * @param callBack_heatMap to return after long task.
-     */
-    public static void generateBitmap(double[][] matrix, CallBack_HeatMap callBack_heatMap) {
-        new MyLongOperation(matrix, callBack_heatMap).execute();
-    }
-
     private static Bitmap generateBitmap(double[][] matrix) {
         matrix = normalizeMatrix(matrix);
         int HEIGHT = matrix.length;
@@ -94,53 +103,17 @@ public class HeatMap {
         return image;
     }
 
-    public interface CallBack_HeatMap {
-        void bitmapReady(Bitmap bitmap);
-    }
-
-    static class MyLongOperation extends AsyncTask<Void, Void, Void> {
-
-        private double[][] matrix;
-        private CallBack_HeatMap callBack_heatMap;
-
-        public MyLongOperation(double[][] matrix, CallBack_HeatMap callBack_heatMap) {
-            this.matrix = matrix;
-            this.callBack_heatMap = callBack_heatMap;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            Bitmap bitmap = generateBitmap(matrix);
-            if (callBack_heatMap != null) {
-                callBack_heatMap.bitmapReady(bitmap);
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-            super.onPostExecute(result);
-        }
-    }
-
-
     public static class TaskRunner {
         private final Executor executor = Executors.newSingleThreadExecutor(); // change according to your requirements
         private final Handler handler = new Handler(Looper.getMainLooper());
 
-        public interface Callback<R> {
-            void onComplete(R result);
+        public interface Callback<Bitmap> {
+            void onComplete(Bitmap result);
         }
 
-        public <R> void executeAsync(Callable<R> callable, Callback<R> callback) {
+        public <Bitmap> void executeAsync(Callable<Bitmap> callable, Callback<Bitmap> callback) {
             executor.execute(() -> {
-                final R result;
+                final Bitmap result;
                 try {
                     result = callable.call();
                     handler.post(() -> {
@@ -152,5 +125,22 @@ public class HeatMap {
             });
         }
     }
+
+    static class LongRunningTask implements Callable<Bitmap> {
+
+        private double[][] matrix;
+
+        public LongRunningTask(double[][] matrix) {
+            this.matrix = matrix;
+        }
+
+        @Override
+        public Bitmap call() {
+            Bitmap bitmap = generateBitmap(matrix);
+
+            return bitmap;
+        }
+    }
+
 
 }

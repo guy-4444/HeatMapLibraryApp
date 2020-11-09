@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
     private void start() {
         main_PRG_heat.setVisibility(View.VISIBLE);
         main_BTN_start.setVisibility(View.GONE);
+
         HeatMap.generateBitmap(screenData, new HeatMap.CallBack_HeatMap() {
             @Override
             public void bitmapReady(Bitmap bitmap) {
@@ -113,3 +114,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 }
+/*
+[21A10242] Guy Isakov 123456789
+TomC@mail.afeka.ac.il
+
+Create library module
+Commits
+Upload to Jitpack
+Edit Readme file (GitHub)
+ */
+
