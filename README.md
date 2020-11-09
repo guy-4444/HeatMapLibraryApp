@@ -1,8 +1,6 @@
 # HeatMapLibraryApp
 
 [![](https://jitpack.io/v/guy-4444/HeatMapLibraryApp.svg)](https://jitpack.io/#guy-4444/HeatMapLibraryApp)
-[![](https://img.shields.io/hexpm/l/.HeatMapLibraryApp?color=fg&label=fgf&logo=fg&logoColor=fg)
-
 ![GitHub](https://img.shields.io/github/license/guy-4444/HeatMapLibraryApp)
 
 
